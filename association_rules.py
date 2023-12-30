@@ -32,5 +32,19 @@ rules = rules.sort_values(['confidence', 'lift'], ascending=[False, False])
 # Show the rules that have the Pawpularity variable in the consequent and sort them by confidence and lift
 sorted_rules = rules[rules['consequents'].astype(str).str.contains('Pawpularity')].sort_values(['confidence', 'lift'], ascending=[False, False])
 
-# Display the top sorted rules
-print(sorted_rules.head(10)) 
+# Get the antecedents of the top ten sorted rules and show the frequency of each antecedent
+top_ten = sorted_rules.head(10)
+top_ten_antecedents = top_ten['antecedents'].astype(str)
+top_ten_antecedents = top_ten_antecedents.str.replace('frozenset', '')
+top_ten_antecedents = top_ten_antecedents.str.replace('(', '')
+top_ten_antecedents = top_ten_antecedents.str.replace(')', '')
+top_ten_antecedents = top_ten_antecedents.str.replace('{', '')
+top_ten_antecedents = top_ten_antecedents.str.replace('}', '')
+top_ten_antecedents = top_ten_antecedents.str.replace("'", '')
+top_ten_antecedents = top_ten_antecedents.str.replace(" ", '')
+top_ten_antecedents = top_ten_antecedents.str.split(',')
+top_ten_antecedents = top_ten_antecedents.explode()
+top_ten_antecedents = top_ten_antecedents.value_counts()
+top_ten_antecedents = top_ten_antecedents.reset_index()
+top_ten_antecedents.columns = ['Feature', 'Frequency']
+print(top_ten_antecedents.head(10))  # Display the top ten antecedents
