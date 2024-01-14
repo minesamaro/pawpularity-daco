@@ -11,6 +11,8 @@ from skimage import img_as_ubyte
 from skimage.feature import local_binary_pattern
 import mahotas
 from skimage.feature import hog
+from skimage import io
+
 
 # Source path (where the Pawpularity contest data resides)
 path = "C:/Users/Leonor Moura/Documents/faculdade/bioengenharia/BIOMEDICA 3/Mestrado/daco/projeto/"
