@@ -135,6 +135,7 @@ def feat_extract (ids, folder="test"):
 
     # Create an empty DataFrame
     final_df = pd.DataFrame()
+    final_df['Id'] = ids
 
     # Add the "Pawpularity" column to the final DataFrame
     final_df['Pawpularity'] = train_df['Pawpularity']/100.0
