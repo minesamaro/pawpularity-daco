@@ -7,4 +7,7 @@ scikit-learn
 scipy
 scikit-image
 cv2
-mahotas
+torch
+torchvision
+torchsummary
+itertools
