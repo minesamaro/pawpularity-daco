@@ -9,14 +9,11 @@ from skimage.feature import local_binary_pattern
 from skimage import img_as_ubyte
 
 
-# Source path (where the Pawpularity contest data resides)
-path = "C:/Users/Leonor Moura/Documents/faculdade/bioengenharia/BIOMEDICA 3/Mestrado/daco/projeto/"
-
 # Get the metadata (the .csv data) and put it into DataFrames
-train_df = pd.read_csv(path + 'train.csv')
+train_df = pd.read_csv('train.csv')
 
 # Get the image data (the .jpg data) and put it into lists of filenames
-train_jpg = glob(path + "train/*.jpg")
+train_jpg = glob("train/*.jpg")
 
 # LBP features list
 lbp_features = []

@@ -9,14 +9,11 @@ from skimage.filters import gabor
 from skimage import img_as_ubyte
 from skimage import io
 
-# Source path (where the Pawpularity contest data resides)
-path = "C:/Users/Leonor Moura/Documents/faculdade/bioengenharia/BIOMEDICA 3/Mestrado/daco/projeto/"
-
 # Get the metadata (the .csv data) and put it into DataFrames
-train_df = pd.read_csv(path + 'train.csv')
+train_df = pd.read_csv('train.csv')
 
 # Get the image data (the .jpg data) and put it into lists of filenames
-train_jpg = glob(path + "train/*.jpg")
+train_jpg = glob("train/*.jpg")
 
 # Gabor features list
 gabor_features = []
@@ -33,7 +30,6 @@ for image_path in train_jpg:
     image_ubyte = img_as_ubyte(gray_image)
 
     # Calculate Gabor filter responses
-    # You can adjust the parameters such as frequency and orientation
     gabor_responses, _ = gabor(image_ubyte, frequency=0.6, theta=1.5)
 
     # Extract Gabor features (mean of responses)

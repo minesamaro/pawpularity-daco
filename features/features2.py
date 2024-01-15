@@ -7,14 +7,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2 as cv
 
-# Source path (where the Pawpularity contest data resides)
-path = "C:/Users/Leonor Moura/Documents/faculdade/bioengenharia/BIOMEDICA 3/Mestrado/daco/projeto/"
-
 # Get the metadata (the .csv data) and put it into DataFrames
-train_df = pd.read_csv(path + 'train.csv')
+train_df = pd.read_csv('train.csv')
 
 # Get the image data (the .jpg data) and put it into lists of filenames
-train_jpg = glob(path + "train/*.jpg")
+train_jpg = glob("train/*.jpg")
 
 # Features lists
 
@@ -26,7 +23,7 @@ variance_red_features = []
 variance_green_features = []
 variance_blue_features = []
 
-# Assuming selected_features is a list of column names you want to visualize from your DataFrame
+# Assuming selected_features 
 selected_features = ['Id','total_entropy', 'mean_red', 'mean_green', 'mean_blue', 'variance_red', 'variance_green', 'variance_blue']
 
 for image_path in train_jpg:
@@ -89,20 +86,20 @@ final_df['variance_green'] = variance_green_features
 final_df['variance_blue'] = variance_blue_features
 
 # Calculate the correlation matrix
-#correlation_matrix = final_df.corr()
+correlation_matrix = final_df.corr()
 
 # Check if selected features have non-null values
-#print("Null values in selected features:")
-#print(final_df[selected_features].isnull().sum())
+print("Null values in selected features:")
+print(final_df[selected_features].isnull().sum())
 
 # Add the correlation matrix to the final DataFrame
-#final_df = pd.concat([final_df, correlation_matrix['Pawpularity']], axis=1, keys=['features', 'correlation'])
+final_df = pd.concat([final_df, correlation_matrix['Pawpularity']], axis=1, keys=['features', 'correlation'])
 
 # Display the final DataFrame
-#print(final_df.head())
+print(final_df.head())
 
 # Plot the correlation matrix
-#plt.figure(figsize=(10, 8))
-#sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f')
-#plt.title('Correlation Matrix')
-#plt.show()
+plt.figure(figsize=(10, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Correlation Matrix')
+plt.show()
