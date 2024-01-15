@@ -10,17 +10,12 @@ import os
 import numpy as np
 import seaborn as sns
 
+# Get the metadata (the .csv data) and put it into DataFrames
+train_df = pd.read_csv('train.csv')
 
-#source path (where the Pawpularity contest data resides)
-path ="C:/Users/Leonor Moura/Documents/faculdade/bioengenharia/BIOMEDICA 3/Mestrado/daco/projeto/"
-
-#Get the metadata (the .csv data) and put it into DataFrames
-train_df = pd.read_csv(path + 'train.csv')
-#test_df = pd.read_csv(path + 'test.csv')
-
-#Get the image data (the .jpg data) and put it into lists of filenames
-train_jpg = glob(path + "train/*.jpg")
-#test_jpg= glob(path + "test/*.jpg")       
+# Get the image data (the .jpg data) and put it into lists of filenames
+train_jpg = glob("train/*.jpg")
+  
  
 luminance_features = []
 saturation_features = []
@@ -29,23 +24,23 @@ for image_path in train_jpg:
     # Load image
     image = cv.imread(image_path)
     
-    # Calcular luminância média
+    # calculate luminance
     luminance = np.mean(cv.cvtColor(image, cv.COLOR_BGR2GRAY))
     luminance_features.append(luminance)
     
-    # Calcular saturação média
+    # calculate saturation
     hsv_image = cv.cvtColor(image, cv.COLOR_BGR2HSV)
     saturation = np.mean(hsv_image[..., 1])
     saturation_features.append(saturation)
     
   
 
-# Adicionar características de luminância e saturação ao DataFrame
+# Add luminance and saturation features to the training DataFrame
 train_df['luminance'] = luminance_features
 train_df['saturation'] = saturation_features
 
 
-# Exemplo de código para gráfico de dispersão
+# Example code for scatter plot
 plt.scatter(train_df['Pawpularity'], train_df['luminance'])
 plt.xlabel('Pawpularity')
 plt.ylabel('Luminance')

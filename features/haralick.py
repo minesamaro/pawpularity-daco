@@ -15,18 +15,12 @@ from skimage import io
 import mahotas
 
 
-        
-#source path (where the Pawpularity contest data resides)
-path ="C:/Users/Leonor Moura/Documents/faculdade/bioengenharia/BIOMEDICA 3/Mestrado/daco/projeto/"
+# Get the metadata (the .csv data) and put it into DataFrames
+train_df = pd.read_csv('train.csv')
 
-#Get the metadata (the .csv data) and put it into DataFrames
-train_df = pd.read_csv(path + 'train.csv')
-#test_df = pd.read_csv(path + 'test.csv')
+# Get the image data (the .jpg data) and put it into lists of filenames
+train_jpg = glob("train/*.jpg")
 
-#Get the image data (the .jpg data) and put it into lists of filenames
-train_jpg = glob(path + "train/*.jpg")
-#test_jpg= glob(path + "test/*.jpg")       
- 
 haralick_features = []
 
 for image_path in train_jpg:

@@ -1,4 +1,4 @@
-# Load in packages
+
 import os
 import seaborn as sns
 import pandas as pd
@@ -12,14 +12,12 @@ from skimage.feature import local_binary_pattern
 import mahotas
 from skimage.feature import hog
 
-# Source path (where the Pawpularity contest data resides)
-path = "C:/Users/Leonor Moura/Documents/faculdade/bioengenharia/BIOMEDICA 3/Mestrado/daco/projeto/"
 
 # Get the metadata (the .csv data) and put it into DataFrames
-train_df = pd.read_csv(path + 'train.csv')
+train_df = pd.read_csv('train.csv')
 
 # Get the image data (the .jpg data) and put it into lists of filenames
-train_jpg = glob(path + "train/*.jpg")
+train_jpg = glob("train/*.jpg")
 
 # Features lists
 gabor_features = []
@@ -28,7 +26,7 @@ hog_features = []
 
 saturation_features = []
 lbp_features = []
-# Assuming selected_features is a list of column names you want to visualize from your DataFrame
+# Selected_features 
 selected_features = ['Id','gabor_mean', 'haralick_0', 'haralick_1', 'haralick_2', 'haralick_3', 'saturation', 'lbp_mean']
 
 for image_path in train_jpg:
@@ -80,7 +78,7 @@ for image_path in train_jpg:
 # Create an empty DataFrame
 final_df = pd.DataFrame()
 
-# Add the "Pawpularity" column to the final DataFrame
+# Add Id and Pawpularity columns
 final_df['Id'] = train_df['Id']
 final_df['Pawpularity'] = train_df['Pawpularity']
 
@@ -91,28 +89,27 @@ final_df = pd.concat([final_df, pd.DataFrame(gabor_features, columns=['gabor_mea
 haralick_columns = ['haralick_' + str(i) for i in range(len(haralick_features[0]))]
 final_df[haralick_columns] = haralick_features
 
-# Add  and saturation features
-
+# Add saturation features
 final_df['saturation'] = saturation_features
 
 # Add LBP features
 final_df = pd.concat([final_df, pd.DataFrame(lbp_features, columns=['lbp_mean'])], axis=1)
 
 # Calculate the correlation matrix
-#correlation_matrix = final_df.corr()
+correlation_matrix = final_df.corr()
 
 # Check if selected features have non-null values
-#print("Null values in selected features:")
-#print(final_df[selected_features].isnull().sum())
+print("Null values in selected features:")
+print(final_df[selected_features].isnull().sum())
 
 # Add the correlation matrix to the final DataFrame
-#final_df = pd.concat([final_df, correlation_matrix['Pawpularity']], axis=1, keys=['features', 'correlation'])
+final_df = pd.concat([final_df, correlation_matrix['Pawpularity']], axis=1, keys=['features', 'correlation'])
 
 # Display the final DataFrame
-#print(final_df.head())
+print(final_df.head())
 
 # Plot the correlation matrix
-#plt.figure(figsize=(12, 12))
-#sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f')
-#plt.title('Correlation Matrix')
-#plt.show()
+plt.figure(figsize=(12, 12))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Correlation Matrix')
+plt.show()
